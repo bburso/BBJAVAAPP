@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      lang="en">
+<!-- This is a comment -->
+    <body>
+        <ui:composition template="/commonLayout.xhtml">
+            <ui:define name="content">
+                <h1>Home Page</h1>
+                <h:form id="reg">
+                    <h2>Member Registration added Managed bean 17 01 19</h2>
+                    <h:panelGrid columns="12" columnClasses="titleCell" styleClass="simpletablestyle">
+                        <h:outputLabel for="name" value="Member Name:"/>
+                        <h:inputText id="name" value="#{member.name}"/>
+                        <h:message for="name" errorClass="invalid"/>
+                        <h:outputLabel for="email" value="Members Email:"/>
+                        <h:inputText id="email" value="#{member.email}"/>
+                        <h:message for="email" errorClass="invalid"/>
+                        <h:outputLabel for="phoneNumber" value="Members PhoneNo:"/>
+                        <h:inputText id="phoneNumber" value="#{member.phoneNumber}"/>
+                        <h:message for="phoneNumber" errorClass="invalid"/>
+                        <h:outputLabel for="bburlstr" value="URL:"/>
+                        <h:inputText id="bburlstr" value="#{member.bburlstr}"/>
+                        <h:message for="bburlstr" errorClass="invalid"/>
+                    </h:panelGrid>
+                    <h:panelGroup rendered="#{empty memberList.members}">
+                        <em>No registered members.</em>
+                    </h:panelGroup>
+                    <h:panelGrid columns="4">
+                        <h:commandButton id="RegisterMember" value="Register Member"
+                              action="#{memberController.performRegistration(member, memberList)}"
+                              styleClass=".register"/>
+                        <h:commandButton id="DefaultName" value="set Default Name" action="#{member.setName('Bert')}"
+                              styleClass=".register"/>
+                        <h:commandButton id="DefaultPhoneNumber" value="set Default Phone Number"
+                              action="#{member.setPhoneNumber('0123456789')}" styleClass=".register"/>
+                        <h:commandButton id="GetFromDB" value="Get From DB" action="#{memberController.bbgetFromDb()}"
+                              styleClass=".register"/>
+                        <h:commandButton id="writeToDb" value="Write to DB" action="#{memberController.bbwriteToDb()}"
+                              styleClass=".register"/>
+                        <h:commandButton value="Click Me!" onclick="alert('Nothing defined yet SORRY!');"/>
+                    </h:panelGrid>
+                    <h2>Members Currently Registered</h2>
+                    <h:dataTable value="#{memberList.members}" var="mbr"
+                      styleClass="simpletablestyle">
+                        <h:column>
+                            <f:facet name="header">Member Id:</f:facet>
+                            #{mbr.id}
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Member Name</f:facet>
+                            #{mbr.name}
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Member Email:</f:facet>
+                            #{mbr.email}
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Member Phone no: #</f:facet>
+                            #{mbr.phoneNumber}
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Members URL #</f:facet>
+                            #{mbr.bburlstr}
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">REST URL</f:facet>
+                             <a href="#{request.contextPath}/rest/members/#{mbr.id}">/rest/members/#{mbr.id}</a>
+                        </h:column>
+                    </h:dataTable>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>
